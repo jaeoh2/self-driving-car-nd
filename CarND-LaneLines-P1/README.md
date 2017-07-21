@@ -17,14 +17,13 @@ end points in the image with simple 1st order line fomula. Saturating the x,y po
 I can get straight line on the each lane.
 
 ## Shortcomings
-* Only detect on straight line
-
+### Only detect on straight line
 My pipeline can draw the straight line only. Beacuse draw line function has 1st order line formula. If there is corners in the image, average line slope will be biased. 
 Results image will add
 
 ## Suggest improvements
-### Curve fitting
-As described in shortcomings, 
+### Curve drawing
+As described in shortcomings, If we can plot the lane line features to curve fomula, we can draw the lane line without biased.
 ### Different colorspace
 Currently we use only gray color space. Especially, the road has limited lane colors like white, yello and etc.
 So, I think we may get little improvements from different colorspace. 
