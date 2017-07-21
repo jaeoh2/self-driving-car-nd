@@ -17,12 +17,21 @@ end points in the image with simple 1st order line fomula. Saturating the x,y po
 I can get straight line on the each lane.
 
 ## Shortcomings
-* 
+* Only detect on straight line
+
+My pipeline can draw the straight line only. Beacuse draw line function has 1st order line formula. If there is corners in the image, average line slope will be biased. 
+Results image will add
 
 ## Suggest improvements
-* Different colorspace
-
-* Histogram Normalization
+### Curve fitting
+As described in shortcomings, 
+### Different colorspace
+Currently we use only gray color space. Especially, the road has limited lane colors like white, yello and etc.
+So, I think we may get little improvements from different colorspace. 
+### Histogram Normalization
+Since there are different brightness environment on the road (shade, night, tunnel, etc), we need to normalize the
+images pixel intensities before vision processing. Using adaptive hitogram equalization algorithm like CLAHE, we 
+can get better detection result from same pipeline.
 
 ## Conclusions
 Using simple computer vision algorithm (canny, hough transform), we can easily get the lane detection program.
