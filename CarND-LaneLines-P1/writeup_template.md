@@ -1,47 +1,26 @@
-# **Finding Lane Lines on the Road** 
-
-## Writeup Template
-
-### You can use this file as a template for your writeup if you want to submit it as a markdown file. But feel free to use some other method and submit a pdf if you prefer.
-
----
-
-**Finding Lane Lines on the Road**
-
-The goals / steps of this project are the following:
+# Project1 : **Finding Lane Lines on the Road**
+## Introduction
+Detecting lane lines on the Road using computer vison tools like OpenCV, python and Hough transform algorithm.
+The goals of this project are the following:
 * Make a pipeline that finds lane lines on the road
-* Reflect on your work in a written report
 
+## Pipeline description
+My lane detection pipeline has 5-steps are below:
+1. Pre-Process images : Converting gray scale, gaussian Blurring and canny transform.
+1. Set Region of Interests in polygon shape.
+1. Hough transform
+1. Draw lane lines overlayed on original image
+* To Draw lane lines as solid line, I stored entire x,y positions to lists.
+and 
 
-[//]: # (Image References)
-
-[image1]: ./examples/grayscale.jpg "Grayscale"
-
----
-
-### Reflection
-
-### 1. Describe your pipeline. As part of the description, explain how you modified the draw_lines() function.
-
-My pipeline consisted of 5 steps. First, I converted the images to grayscale, then I .... 
-
-In order to draw a single line on the left and right lanes, I modified the draw_lines() function by ...
-
-If you'd like to include images to show how the pipeline works, here is how to include an image: 
-
-![alt text][image1]
-
-
-### 2. Identify potential shortcomings with your current pipeline
-
-
+## Shortcomings
 One potential shortcoming would be what would happen when ... 
 
 Another shortcoming could be ...
 
-
-### 3. Suggest possible improvements to your pipeline
-
+## Suggest improvements
 A possible improvement would be to ...
 
 Another potential improvement could be to ...
+
+## Conclusions
