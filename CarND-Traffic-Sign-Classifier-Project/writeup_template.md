@@ -22,10 +22,29 @@ This is the project of udacity Term1 German traffic sign classifier project. The
 [image7]: ./examples/placeholder.png "Traffic Sign 4"
 [image8]: ./examples/placeholder.png "Traffic Sign 5"
 
-## Rubric Points
-### Here I will consider the [rubric points](https://review.udacity.com/#!/rubrics/481/view) individually and describe how I addressed each point in my implementation.  
+---
+## Dataset
+### Dataset Exploration
+### Preprocessing
+### Augmentation
+#### Transform
 
 ---
+## Model
+### Architecture
+### Training
+### Results
+
+---
+## Test
+### New Images
+### Performance on New Images
+### Top 5 results
+
+---
+## Conclusion
+
+
 ### Writeup / README
 
 #### 1. Provide a Writeup / README that includes all the rubric points and how you addressed each one. You can submit your writeup as markdown or pdf. You can use this template as a guide for writing the report. The submission includes the project code.
