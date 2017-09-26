@@ -1,16 +1,10 @@
 # **Traffic Sign Recognition** 
 
-## Writeup Template
-
-### You can use this file as a template for your writeup if you want to submit it as a markdown file, but feel free to use some other method and submit a pdf if you prefer.
-
----
-
-**Build a Traffic Sign Recognition Project**
-
-The goals / steps of this project are the following:
+## Introduction
+This is the project of udacity Term1 German traffic sign classifier project. The goal of this project is the following:
+ 
 * Load the data set (see below for links to the project data set)
-* Explore, summarize and visualize the data set
+* Data preprocessing, Data augmentation
 * Design, train and test a model architecture
 * Use the model to make predictions on new images
 * Analyze the softmax probabilities of the new images
