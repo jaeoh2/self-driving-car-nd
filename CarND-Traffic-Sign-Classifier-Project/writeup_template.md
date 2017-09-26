@@ -24,6 +24,14 @@ This is the project of udacity Term1 German traffic sign classifier project. The
 
 ---
 ## Dataset
+The dataset consists of training, validation and test data. Each images has 32x32x3 pixels and RGB colorspace. The number of example  data is following:
+
+| Dataset | number of examples |
+|---|---|
+| Training | 34,799 |
+| Validation | 4,410 |
+| Test | 12,630 |
+
 ### Dataset Exploration
 ### Preprocessing
 ### Augmentation
