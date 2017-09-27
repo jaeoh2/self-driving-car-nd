@@ -121,7 +121,7 @@ The performance on first 5 images are very clear to recognize it. The test image
 ### Top 5 results
 Here are the top-5 result of the Test images from web:
 
-[image12]: ./examples/train_result.png "Train result"
+![alt_text][image13]
 
 ---
 ## Conclusion
