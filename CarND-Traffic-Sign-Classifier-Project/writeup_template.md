@@ -26,6 +26,7 @@ Here is a link to my [project code](https://github.com/jaeoh2/self-driving-car-n
 [image10]: ./examples/transform_img.png "Transformed image"
 [image11]: ./examples/layers.png "Model layers"
 [image12]: ./examples/train_result.png "Train result"
+[image13]: ./examples/perf_result.png "Performance result"
 
 ---
 ## Dataset
@@ -115,49 +116,13 @@ Here are the test result of 6 German traffic signs that I found on the web:
 ![alt_text][image4] ![alt_text][image5] ![alt_text][image6] 
 
 ### Performance on New Images
+The performance on first 5 images are very clear to recognize it. The test images located very well in the center of images. But last one, the speed limit data is biased and relatively smaller than first 5 samples. So, during the resize the images to 32x32 pixels, I think speed limit number informations were losted. This is the reason mis-classified result of speed limit data.
 
 ### Top 5 results
+Here are the top-5 result of the Test images from web:
+
+[image12]: ./examples/train_result.png "Train result"
 
 ---
 ## Conclusion
-
-
-
-
-
-#### 2. Discuss the model's predictions on these new traffic signs and compare the results to predicting on the test set. At a minimum, discuss what the predictions were, the accuracy on these new predictions, and compare the accuracy to the accuracy on the test set (OPTIONAL: Discuss the results in more detail as described in the "Stand Out Suggestions" part of the rubric).
-
-Here are the results of the prediction:
-
-| Image			        |     Prediction	        					| 
-|:---------------------:|:---------------------------------------------:| 
-| Stop Sign      		| Stop sign   									| 
-| U-turn     			| U-turn 										|
-| Yield					| Yield											|
-| 100 km/h	      		| Bumpy Road					 				|
-| Slippery Road			| Slippery Road      							|
-
-
-The model was able to correctly guess 4 of the 5 traffic signs, which gives an accuracy of 80%. This compares favorably to the accuracy on the test set of ...
-
-#### 3. Describe how certain the model is when predicting on each of the five new images by looking at the softmax probabilities for each prediction. Provide the top 5 softmax probabilities for each image along with the sign type of each probability. (OPTIONAL: as described in the "Stand Out Suggestions" part of the rubric, visualizations can also be provided such as bar charts)
-
-The code for making predictions on my final model is located in the 11th cell of the Ipython notebook.
-
-For the first image, the model is relatively sure that this is a stop sign (probability of 0.6), and the image does contain a stop sign. The top five soft max probabilities were
-
-| Probability         	|     Prediction	        					| 
-|:---------------------:|:---------------------------------------------:| 
-| .60         			| Stop sign   									| 
-| .20     				| U-turn 										|
-| .05					| Yield											|
-| .04	      			| Bumpy Road					 				|
-| .01				    | Slippery Road      							|
-
-
-For the second image ... 
-
-### (Optional) Visualizing the Neural Network (See Step 4 of the Ipython notebook for more details)
-####1. Discuss the visual output of your trained network's feature maps. What characteristics did the neural network use to make classifications?
-
-
+Using German traffic sign dataset and simple CNN model, we get traffic sign classifier with accuracy of more then 94%. I applied data preprocessing(rgb2gray, histogram equalization) and data augmentation strategy(random rotate, translate and shear). To improve the accuracy of the model, Im considering to modify the CNN model and research for data balancing approch. 
