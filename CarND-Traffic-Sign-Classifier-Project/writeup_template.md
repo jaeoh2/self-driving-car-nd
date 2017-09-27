@@ -10,19 +10,22 @@ This is the project of udacity Term1 German traffic sign classifier project. The
 * Analyze the softmax probabilities of the new images
 * Summarize the results with a written report
 
+Here is a link to my [project code](https://github.com/jaeoh2/self-driving-car-nd/blob/master/CarND-Traffic-Sign-Classifier-Project/Traffic_Sign_Classifier.ipynb)
 
 [//]: # (Image References)
 
-[image1]: ./examples/test_images_from_google/00_german-road-sign-road-narrows-both-sides-narrow-bottleneck-construction-J2HT7X.jpg "Both_narrow"
-[image2]: ./examples/test_images_from_google/01_roadsign_yield-e1452287501390.png "Yield"
-[image3]: ./examples/test_images_from_google/02_work-progress-road-sign-triangle-isolated-cloudy-background-germany-47409527.jpg "Work_progress"
-[image4]: ./examples/test_images_from_google/03-Speed-limit-sign-in-Germany-Stock-Photo.jpg "Speed_limit"
-[image5]: ./examples/test_images_from_google/04_sign-giving-order-no-entry-vehicular-traffic.jpg "No_entry"
-[image6]: ./examples/test_images_from_google/05_german-road-sign-bicycles-crossing-j2mra8.jpg "Bicycle_crossing"
+[image1]: ./examples/test_result5.png "Both_narrow"
+[image2]: ./examples/test_result3.png "Yield"
+[image3]: ./examples/test_result2.png "Work_progress"
+[image4]: ./examples/test_result6.png "Speed_limit"
+[image5]: ./examples/test_result4.png "No_entry"
+[image6]: ./examples/test_result.png "Bicycle_crossing"
 [image7]: ./examples/random_train_sample.png "Random_train_sample"
 [image8]: ./examples/train_hist.png "Train_histogram"
 [image9]: ./examples/preprocess_img.png "Preprocessed image"
 [image10]: ./examples/transform_img.png "Transformed image"
+[image11]: ./examples/layers.png "Model layers"
+[image12]: ./examples/train_result.png "Train result"
 
 ---
 ## Dataset
@@ -71,133 +74,56 @@ and dataset distributions are ploted below. It's very unbalanced data.(Minimum 1
 ![alt_text][image8]
 
 ### Preprocessing
-As we seen the dataset exploration, Images has uneven brightness. So we need to pre-process the images. First, I convert RGB color space to gray, and normalize it with mean zero and equal variance approximately. Last, I apply adaptive histogram normalization(CLAHE) to solve the unbalanced brightness.
+As we seen the dataset exploration, Images has uneven brightness. So we need to pre-process the images. First, I convert RGB color space to gray, and normalize it with mean zero and equal variance approximately. Last, I applied adaptive histogram normalization(CLAHE) to solve the unbalanced brightness.
 
 ![alt_text][image9]
 
-As you can see above, images brightness are equalized.
+The difference between images are above. As you can see, the images brightness were equalized.
 
 ### Augmentation
-The number of training dataset is relatively enough to train. but some class has very small number of data to generalize the model. I use image augmentation techniques to generate enough dataset. Random rotation, translation and shearing are used. After data augmentation, training sample are increased to x10 time(347,990 samples). The test transformed images are follwed: (1,1) is original image
+The number of training dataset is relatively enough to train. but some class has very small number of data to generalize the model. I used image augmentation techniques to generate enough dataset. Random rotation, translation and shearing were used. After data augmentation, training sample are increased to x10 time(347,990 samples). The test transformed images are follwed: (1,1) is original image
 
 ![alt_text][image10]
 
 ---
 ## Model
+I used common CNN classifier structure(CNN after FC). CNN layers are similar with VGG. It has 3 CNN layers. Fully connected layer has 2-hidden layers. Activation function used 'elu'. Dropout are used in FC, Batch Normalization are in CNN. Optimizer is stocastic gradient descent and cost function is softmax. 
 ### Architecture
+The model architectures are below :
+
+![alt_text][image11]
+
 ### Training
+Train on 347,990 samples, validate on 4,410 samples. Batch size is 1024 per GPU(I use two Tesla K80 GPU), epochs 100.
+Early stopping strategy was used. Learning rate is started from 1e-2 and it decayed size of 1e-6. Training finished at 30 epoch with loss : 0.0092, acc: 0.9973 / val_loss: 0.1359, val_acc: 0.9794.
+
+![alt_text][image12]
+
 ### Results
+The final results of my model were :
+* accuracy of the test dataset is __94.39%__
+* accuracy of the train dataset is 99.73%
+* accuracy of the validation dataset is 97.94%
+
+At first, I think this is the common image classification problem. But the number os datasets were small to train well. When I tested same CNN model architecture without data preprocessing, I got about 80%. So I decided to focus on making the preprocessing dataset. If we have enough numbers of dataset for image classification problem, we can get high accuracy model even using simple CNN architecture. This is why I spend more time to make data augmentation features then modified the model for this project.
 
 ---
-## Test
-### New Images
+## Test a Model on New Images
+Here are the test result of 6 German traffic signs that I found on the web:
+
+![alt_text][image1] ![alt_text][image2] ![alt_text][image3] 
+![alt_text][image4] ![alt_text][image5] ![alt_text][image6] 
+
 ### Performance on New Images
+
 ### Top 5 results
 
 ---
 ## Conclusion
 
 
-### Writeup / README
-
-#### 1. Provide a Writeup / README that includes all the rubric points and how you addressed each one. You can submit your writeup as markdown or pdf. You can use this template as a guide for writing the report. The submission includes the project code.
-
-You're reading it! and here is a link to my [project code](https://github.com/udacity/CarND-Traffic-Sign-Classifier-Project/blob/master/Traffic_Sign_Classifier.ipynb)
-
-### Data Set Summary & Exploration
-
-#### 1. Provide a basic summary of the data set. In the code, the analysis should be done using python, numpy and/or pandas methods rather than hardcoding results manually.
-
-I used the pandas library to calculate summary statistics of the traffic
-signs data set:
-
-* The size of training set is ?
-* The size of the validation set is ?
-* The size of test set is ?
-* The shape of a traffic sign image is ?
-* The number of unique classes/labels in the data set is ?
-
-####2. Include an exploratory visualization of the dataset.
-
-Here is an exploratory visualization of the data set. It is a bar chart showing how the data ...
-
-![alt text][image1]
-
-### Design and Test a Model Architecture
-
-#### 1. Describe how you preprocessed the image data. What techniques were chosen and why did you choose these techniques? Consider including images showing the output of each preprocessing technique. Pre-processing refers to techniques such as converting to grayscale, normalization, etc. (OPTIONAL: As described in the "Stand Out Suggestions" part of the rubric, if you generated additional data for training, describe why you decided to generate additional data, how you generated the data, and provide example images of the additional data. Then describe the characteristics of the augmented training set like number of images in the set, number of images for each class, etc.)
-
-As a first step, I decided to convert the images to grayscale because ...
-
-Here is an example of a traffic sign image before and after grayscaling.
-
-![alt text][image2]
-
-As a last step, I normalized the image data because ...
-
-I decided to generate additional data because ... 
-
-To add more data to the the data set, I used the following techniques because ... 
-
-Here is an example of an original image and an augmented image:
-
-![alt text][image3]
-
-The difference between the original data set and the augmented data set is the following ... 
 
 
-#### 2. Describe what your final model architecture looks like including model type, layers, layer sizes, connectivity, etc.) Consider including a diagram and/or table describing the final model.
-
-My final model consisted of the following layers:
-
-| Layer         		|     Description	        					| 
-|:---------------------:|:---------------------------------------------:| 
-| Input         		| 32x32x3 RGB image   							| 
-| Convolution 3x3     	| 1x1 stride, same padding, outputs 32x32x64 	|
-| RELU					|												|
-| Max pooling	      	| 2x2 stride,  outputs 16x16x64 				|
-| Convolution 3x3	    | etc.      									|
-| Fully connected		| etc.        									|
-| Softmax				| etc.        									|
-|						|												|
-|						|												|
- 
-
-
-#### 3. Describe how you trained your model. The discussion can include the type of optimizer, the batch size, number of epochs and any hyperparameters such as learning rate.
-
-To train the model, I used an ....
-
-#### 4. Describe the approach taken for finding a solution and getting the validation set accuracy to be at least 0.93. Include in the discussion the results on the training, validation and test sets and where in the code these were calculated. Your approach may have been an iterative process, in which case, outline the steps you took to get to the final solution and why you chose those steps. Perhaps your solution involved an already well known implementation or architecture. In this case, discuss why you think the architecture is suitable for the current problem.
-
-My final model results were:
-* training set accuracy of ?
-* validation set accuracy of ? 
-* test set accuracy of ?
-
-If an iterative approach was chosen:
-* What was the first architecture that was tried and why was it chosen?
-* What were some problems with the initial architecture?
-* How was the architecture adjusted and why was it adjusted? Typical adjustments could include choosing a different model architecture, adding or taking away layers (pooling, dropout, convolution, etc), using an activation function or changing the activation function. One common justification for adjusting an architecture would be due to overfitting or underfitting. A high accuracy on the training set but low accuracy on the validation set indicates over fitting; a low accuracy on both sets indicates under fitting.
-* Which parameters were tuned? How were they adjusted and why?
-* What are some of the important design choices and why were they chosen? For example, why might a convolution layer work well with this problem? How might a dropout layer help with creating a successful model?
-
-If a well known architecture was chosen:
-* What architecture was chosen?
-* Why did you believe it would be relevant to the traffic sign application?
-* How does the final model's accuracy on the training, validation and test set provide evidence that the model is working well?
- 
-
-### Test a Model on New Images
-
-#### 1. Choose five German traffic signs found on the web and provide them in the report. For each image, discuss what quality or qualities might be difficult to classify.
-
-Here are five German traffic signs that I found on the web:
-
-![alt text][image4] ![alt text][image5] ![alt text][image6] 
-![alt text][image7] ![alt text][image8]
-
-The first image might be difficult to classify because ...
 
 #### 2. Discuss the model's predictions on these new traffic signs and compare the results to predicting on the test set. At a minimum, discuss what the predictions were, the accuracy on these new predictions, and compare the accuracy to the accuracy on the test set (OPTIONAL: Discuss the results in more detail as described in the "Stand Out Suggestions" part of the rubric).
 
