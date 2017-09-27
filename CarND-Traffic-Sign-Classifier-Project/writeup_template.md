@@ -21,6 +21,8 @@ This is the project of udacity Term1 German traffic sign classifier project. The
 [image6]: ./examples/test_images_from_google/05_german-road-sign-bicycles-crossing-j2mra8.jpg "Bicycle_crossing"
 [image7]: ./examples/random_train_sample.png "Random_train_sample"
 [image8]: ./examples/train_hist.png "Train_histogram"
+[image9]: ./examples/preprocess_img.png "Preprocessed image"
+[image10]: ./examples/transform_img.png "Transformed image"
 
 ---
 ## Dataset
@@ -64,9 +66,21 @@ I used matplotlib to visualize the images in the notebook. I selected 25 samples
 
 ![alt text][image7]
 
+and dataset distributions are ploted below. It's very unbalanced data.(Minimum 130 to Maximum 2010)
+
+![alt_text][image8]
+
 ### Preprocessing
+As we seen the dataset exploration, Images has uneven brightness. So we need to pre-process the images. First, I convert RGB color space to gray, and normalize it with mean zero and equal variance approximately. Last, I apply adaptive histogram normalization(CLAHE) to solve the unbalanced brightness.
+
+![alt_text][image9]
+
+As you can see above, images brightness are equalized.
+
 ### Augmentation
-#### Transform
+The number of training dataset is relatively enough to train. but some class has very small number of data to generalize the model. I use image augmentation techniques to generate enough dataset. Random rotation, translation and shearing are used. After data augmentation, training sample are increased to x10 time(347,990 samples). The test transformed images are follwed: (1,1) is original image
+
+![alt_text][image10]
 
 ---
 ## Model
