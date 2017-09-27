@@ -13,26 +13,57 @@ This is the project of udacity Term1 German traffic sign classifier project. The
 
 [//]: # (Image References)
 
-[image1]: ./examples/visualization.jpg "Visualization"
-[image2]: ./examples/grayscale.jpg "Grayscaling"
-[image3]: ./examples/random_noise.jpg "Random Noise"
-[image4]: ./examples/placeholder.png "Traffic Sign 1"
-[image5]: ./examples/placeholder.png "Traffic Sign 2"
-[image6]: ./examples/placeholder.png "Traffic Sign 3"
-[image7]: ./examples/placeholder.png "Traffic Sign 4"
-[image8]: ./examples/placeholder.png "Traffic Sign 5"
+[image1]: ./examples/test_images_from_google/00_german-road-sign-road-narrows-both-sides-narrow-bottleneck-construction-J2HT7X.jpg "Both_narrow"
+[image2]: ./examples/test_images_from_google/01_roadsign_yield-e1452287501390.png "Yield"
+[image3]: ./examples/test_images_from_google/02_work-progress-road-sign-triangle-isolated-cloudy-background-germany-47409527.jpg "Work_progress"
+[image4]: ./examples/test_images_from_google/03-Speed-limit-sign-in-Germany-Stock-Photo.jpg "Speed_limit"
+[image5]: ./examples/test_images_from_google/04_sign-giving-order-no-entry-vehicular-traffic.jpg "No_entry"
+[image6]: ./examples/test_images_from_google/05_german-road-sign-bicycles-crossing-j2mra8.jpg "Bicycle_crossing"
+[image7]: ./examples/random_train_sample.png "Random_train_sample"
+[image8]: ./examples/train_hist.png "Train_histogram"
 
 ---
 ## Dataset
 The dataset consists of training, validation and test data. Each images has 32x32x3 pixels and RGB colorspace. The number of example  data is following:
 
-| Dataset | number of examples |
-|---|---|
-| Training | 34,799 |
-| Validation | 4,410 |
-| Test | 12,630 |
+| Dataset | Shape of examples | Classes |
+|---|---:|:---:|
+| Training | 34,799 x 32 x 32 x 3 | 43 |
+| Validation | 4,410 x 32 x 32 x 3 | 43 |
+| Test | 12,630 x 32 x 32 x 3 | 43 |
+
+This is the 43-class names of the dataset. I used pandas module to read csv file.
+
+| Class ID | SignalName | Class ID | SignalName |
+|---|:---|---|:---|
+|	0 |	Speed limit (20km/h) | 22 | Bumpy road |
+|	1 |	Speed limit (30km/h) | 23 | Slippery road |
+|	2 |	Speed limit (50km/h) | 24 | Road narrows on the right |
+|	3 |	Speed limit (60km/h) | 25 | Road work |
+|	4 |	Speed limit (70km/h) | 26 | Traffic signals |
+|	5 |	Speed limit (80km/h) | 27 | Pedestrians |
+|	6 |	End of speed limit (80km/h) | 28 | Children crossing |
+|	7 |	Speed limit (100km/h) | 29 | Bicycles crossing |
+|	8 |	Speed limit (120km/h) | 30 | Beware of ice/snow |
+|	9 |	No passing | 31 | Wild animals crossing |
+|	10 |	No passing for vehicles over 3.5 metric tons | 32 | End of all speed and passing limits |
+|	11 |	Right-of-way at the next intersection | 33 | Turn right ahead |
+|	12 |	Priority road | 34 | Turn left ahead |
+|	13 |	Yield | 35 | Ahead only |
+|	14 |	Stop | 36 | Go straight or right |
+|	15 |	No vehicles | 37 | Go straight or left |
+|	16 |	Vehicles over 3.5 metric tons prohibited | 38 | Keep right |
+|	17 |	No entry | 39 | Keep left |
+|	18 |	General caution | 40 | Roundabout mandatory |
+|	19 |	Dangerous curve to the left | 41 | End of no passing |
+|	20 |	Dangerous curve to the right | 42 | End of no passing by vehicles over 3.5 metric ... |
+|	21 |	Double curve | 43 |  |
 
 ### Dataset Exploration
+I used matplotlib to visualize the images in the notebook. I selected 25 samples randomly from entire training samples.
+
+![alt text][image7]
+
 ### Preprocessing
 ### Augmentation
 #### Transform
