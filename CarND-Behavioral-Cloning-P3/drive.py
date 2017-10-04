@@ -12,6 +12,9 @@ from PIL import Image
 from flask import Flask
 from io import BytesIO
 
+import matplotlib.image as mpimg
+import skimage.transform as sktransform
+
 from keras.models import load_model
 import h5py
 from keras import __version__ as keras_version
@@ -21,6 +24,15 @@ app = Flask(__name__)
 model = None
 prev_image_array = None
 
+def preprocess(image, top_offset=.375, bottom_offset=.125):
+    """
+    Applies preprocessing pipeline to an image: crops `top_offset` and `bottom_offset`
+    portions of image, resizes to 32x128 px and scales pixel values to [0, 1].
+    """
+    top = int(top_offset * image.shape[0])
+    bottom = int(bottom_offset * image.shape[0])
+    image = sktransform.resize(image[top:-bottom, :], (64, 64, 3))
+    return image
 
 class SimplePIController:
     def __init__(self, Kp, Ki):
@@ -61,6 +73,7 @@ def telemetry(sid, data):
         imgString = data["image"]
         image = Image.open(BytesIO(base64.b64decode(imgString)))
         image_array = np.asarray(image)
+        image_array = preprocess(image_array)
         steering_angle = float(model.predict(image_array[None, :, :, :], batch_size=1))
 
         throttle = controller.update(float(speed))
