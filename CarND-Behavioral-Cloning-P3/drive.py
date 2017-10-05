@@ -13,7 +13,7 @@ from flask import Flask
 from io import BytesIO
 
 import matplotlib.image as mpimg
-import skimage.transform as sktransform
+import cv2
 
 from keras.models import load_model
 import h5py
@@ -24,14 +24,13 @@ app = Flask(__name__)
 model = None
 prev_image_array = None
 
-def preprocess(image, top_offset=.375, bottom_offset=.125):
+def preprocess(image):
     """
     Applies preprocessing pipeline to an image: crops `top_offset` and `bottom_offset`
     portions of image, resizes to 32x128 px and scales pixel values to [0, 1].
     """
-    top = int(top_offset * image.shape[0])
-    bottom = int(bottom_offset * image.shape[0])
-    image = sktransform.resize(image[top:-bottom, :], (64, 64, 3))
+    image = cv2.resize(image[60:140,:], (64,64), interpolation=cv2.INTER_AREA)
+
     return image
 
 class SimplePIController:
