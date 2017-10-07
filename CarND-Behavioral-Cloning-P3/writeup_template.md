@@ -1,21 +1,5 @@
 # **Behavioral Cloning** 
 
-## Writeup Template
-
-### You can use this file as a template for your writeup if you want to submit it as a markdown file, but feel free to use some other method and submit a pdf if you prefer.
-
----
-
-**Behavioral Cloning Project**
-
-The goals / steps of this project are the following:
-* Use the simulator to collect data of good driving behavior
-* Build, a convolution neural network in Keras that predicts steering angles from images
-* Train and validate the model with a training and validation set
-* Test that the model successfully drives around track one without leaving the road
-* Summarize the results with a written report
-
-
 [//]: # (Image References)
 
 [image1]: ./examples/placeholder.png "Model Visualization"
@@ -25,6 +9,39 @@ The goals / steps of this project are the following:
 [image5]: ./examples/placeholder_small.png "Recovery Image"
 [image6]: ./examples/placeholder_small.png "Normal Image"
 [image7]: ./examples/placeholder_small.png "Flipped Image"
+
+## Introduction
+**Behavioral Cloning Project-3**
+
+The goals / steps of this project are the following:
+* Use the simulator to collect data of good driving behavior
+* Build, a convolution neural network in Keras that predicts steering angles from images
+* Train and validate the model with a training and validation set
+* Test that the model successfully drives around track one without leaving the road
+* Summarize the results with a written report
+
+Here is the links to my [project code](https://github.com/jaeoh2/self-driving-car-nd/blob/master/CarND-Behavioral-Cloning-P3/Behavioral-Cloning.ipynb)
+
+---
+
+## Dataset
+The dataset collected from Udacity Self-driving simulator. The train data collected from each track A and B courses in 3-laps. Each images has 160x320x3 pixels and has 3 different camera viewpoint as center,left and right. For my train data has 13,977 examples and it augmented to 258,600 training samples.
+### Dataset Exploration
+*plt df hist images
+The collected dataset is biased to 0 deg steering angle state. I applied data balancing approach to my dataset.
+*plt balanced hist images
+### Augmentation
+
+### Preprocessing
+---
+
+## Model
+### Architecture
+### Training
+
+## Results
+gif images...
+
 
 ## Rubric Points
 ### Here I will consider the [rubric points](https://review.udacity.com/#!/rubrics/432/view) individually and describe how I addressed each point in my implementation.  
