@@ -25,22 +25,45 @@ Here is the links to my [project code](https://github.com/jaeoh2/self-driving-ca
 ---
 
 ## Dataset
-The dataset collected from Udacity Self-driving simulator. The train data collected from each track A and B courses in 3-laps. Each images has 160x320x3 pixels and has 3 different camera viewpoint as center,left and right. For my train data has 13,977 examples and it augmented to 258,600 training samples.
+The dataset collected from [Udacity Self-driving simulator](https://github.com/udacity/self-driving-car-sim). The train data collected from each track A and B courses in 3-laps. Each images has 160x320x3 pixels and has 3 different camera viewpoint as center,left and right. For my train data has 13,977 examples and it augmented to 258,600 training samples.
 ### Dataset Exploration
 *plt df hist images
+
 The collected dataset is biased to 0 deg steering angle state. I applied data balancing approach to my dataset.
+
 *plt balanced hist images
+
 ### Augmentation
+#### Random brightness
+#### Random shadow
+#### Random flip image
 
 ### Preprocessing
+Cropping and Resizing
+Tested color spaces(YUV, HSV) but RGB was best for my cases.
+
 ---
 
 ## Model
+I used Nvidia's End to End self driving CNN models in this projects. It has 3 CNN layers and 3 Fully connected hidden layes. Activation function used 'elu'. Dropout are used in FC layes to prevent overfit. The optimizer is adam and the cost function is mean-squared-error.
+
 ### Architecture
+The model architectures are below:
+ * plt model summary
+
 ### Training
+Train on xxx,xxx samples, validate on 4,410. Batch size is 128, epochs are 5. Early stopping callbacks applied. 
 
 ## Results
-gif images...
+ * gif images on Track A
+ * gif images on Track B
+
+### Notes
+At first, I applied keras generator function to model training. But it was extremely slow to train, I changed it to saving datas to memory. I think when generator transmit the datas to GPU there was some bottleneck on network speeds because the train data was in NAS.
+
+In the first approach, I collected the train data in track A only. It was not bad in track A but the car ran into the cliff in track B. I tried various data augmentation techniques, It was no differences. I collected only 3-laps from track B and the cars start to drive. I think it was much better to collect more data than data augmentation.
+
+Use the analog joy-sticks, at least use mouse steering.
 
 
 ## Rubric Points
