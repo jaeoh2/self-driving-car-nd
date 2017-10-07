@@ -27,20 +27,19 @@ Here is the links to my [project code](https://github.com/jaeoh2/self-driving-ca
 ## Dataset
 The dataset collected from [Udacity Self-driving simulator](https://github.com/udacity/self-driving-car-sim). The train data collected from each track A and B courses in 3-laps. Each images has 160x320x3 pixels and has 3 different camera viewpoint as center,left and right. For my train data has 13,977 examples and it augmented to 258,600 training samples.
 ### Dataset Exploration
-*plt df hist images
+* plt df hist images
 
 The collected dataset is biased to 0 deg steering angle state. I applied data balancing approach to my dataset.
 
-*plt balanced hist images
+* plt balanced hist images
 
 ### Augmentation
 #### Random brightness
-#### Random shadow
 #### Random flip image
 
 ### Preprocessing
-Cropping and Resizing
-Tested color spaces(YUV, HSV) but RGB was best for my cases.
+Cropping, Resizing and RGB color spaces
+ * plt cropping and resizing images
 
 ---
 
@@ -65,6 +64,9 @@ In the first approach, I collected the train data in track A only. It was not ba
 
 Use the analog joy-sticks, at least use mouse steering.
 
+Tested color spaces(YUV, HSV) but RGB was best for my cases.
+
+Random shadow or ramdom brightness approach was not much effects to performance.
 
 ## Rubric Points
 ### Here I will consider the [rubric points](https://review.udacity.com/#!/rubrics/432/view) individually and describe how I addressed each point in my implementation.  
