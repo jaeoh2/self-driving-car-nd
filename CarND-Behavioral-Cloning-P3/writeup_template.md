@@ -51,22 +51,18 @@ The model architectures are below:
  * plt model summary
 
 ### Training
-Train on xxx,xxx samples, validate on 4,410. Batch size is 128, epochs are 5. Early stopping callbacks applied. 
+Train on 167,720 samples, validate on 8,387. Batch size is 128, epochs are 10. Early stopping callbacks applied. 
 
 ## Results
  * gif images on Track A
  * gif images on Track B
 
 ### Notes
-At first, I applied keras generator function to model training. But it was extremely slow to train, I changed it to saving datas to memory. I think when generator transmit the datas to GPU there was some bottleneck on network speeds because the train data was in NAS.
-
-In the first approach, I collected the train data in track A only. It was not bad in track A but the car ran into the cliff in track B. I tried various data augmentation techniques, It was no differences. I collected only 3-laps from track B and the cars start to drive. I think it was much better to collect more data than data augmentation.
-
-Use the analog joy-sticks, at least use mouse steering.
-
-Tested color spaces(YUV, HSV) but RGB was best for my cases.
-
-Random shadow or ramdom brightness approach was not much effects to performance.
+ * At first, I applied keras generator function to model training. But it was extremely slow to train, I changed it to saving datas to memory. I think when generator transmit the datas to GPU there was some bottleneck on network speeds because the train data was in NAS.
+ * I collected the train data in track A only. It was not bad in track A but the car ran into the cliff in track B. I tried various data augmentation techniques, It was no differences. I collected only 3-laps from track B and the cars start to drive. I think it was much better to collect more data than data augmentation.
+ * Use the analog joy-sticks, at least use the mouse steering.
+ * Tested color spaces(YUV, HSV) but RGB was the best for my cases.
+ * Random shadow or ramdom brightness approaches was not much effects to get better performance.
 
 ## Rubric Points
 ### Here I will consider the [rubric points](https://review.udacity.com/#!/rubrics/432/view) individually and describe how I addressed each point in my implementation.  
