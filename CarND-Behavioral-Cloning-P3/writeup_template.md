@@ -2,13 +2,10 @@
 
 [//]: # (Image References)
 
-[image1]: ./examples/placeholder.png "Model Visualization"
-[image2]: ./examples/placeholder.png "Grayscaling"
-[image3]: ./examples/placeholder_small.png "Recovery Image"
-[image4]: ./examples/placeholder_small.png "Recovery Image"
-[image5]: ./examples/placeholder_small.png "Recovery Image"
-[image6]: ./examples/placeholder_small.png "Normal Image"
-[image7]: ./examples/placeholder_small.png "Flipped Image"
+[image1]: ./examples/hist.png "Histogram"
+[image2]: ./examples/histbal.png "Balanced histogram"
+[image3]: ./examples/modelsummary.png "Model Summary"
+[image4]: ./examples/transformed.png "Transformed Image"
 
 ## Introduction
 **Behavioral Cloning Project-3**
@@ -27,13 +24,13 @@ Here is the links to my [project code](https://github.com/jaeoh2/self-driving-ca
 ## Dataset
 The dataset collected from [Udacity Self-driving simulator](https://github.com/udacity/self-driving-car-sim). The train data collected from each track A and B courses in 3-laps. Each images has 160x320x3 pixels and has 3 different camera viewpoint as center,left and right. For my train data has 13,977 examples and it augmented to 258,600 training samples.
 ### Dataset Exploration
-* plt df hist images
+![alt_text][image1]
 
 The collected dataset is biased to 0 deg steering angle state. I applied data balancing approach to my dataset.
-
-* plt balanced hist images
+![alt_text][image2]
 
 ### Augmentation
+![alt_text][image4]
 #### Random brightness
 #### Random flip image
 
@@ -48,7 +45,7 @@ I used Nvidia's End to End self driving CNN models in this projects. It has 3 CN
 
 ### Architecture
 The model architectures are below:
- * plt model summary
+![alt_text][image3]
 
 ### Training
 Train on 167,720 samples, validate on 8,387. Batch size is 128, epochs are 10. Early stopping callbacks applied. 
