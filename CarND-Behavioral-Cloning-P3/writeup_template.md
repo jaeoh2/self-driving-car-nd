@@ -27,6 +27,7 @@ The dataset collected from [Udacity Self-driving simulator](https://github.com/u
 ![alt_text][image1]
 
 The collected dataset is biased to 0 deg steering angle state. I applied data balancing approach to my dataset for generalizing the model performances.
+
 ![alt_text][image2]
 
 ### Preprocessing
@@ -63,3 +64,9 @@ Train on 167,720 samples, validate on 8,387. Batch size is 128, epochs are 10. E
  * Use the analog joy-sticks, at least use the mouse steering.
  * Tested color spaces(YUV, HSV) but RGB was the best for my cases.
  * Random shadow, rotate, and translate approaches was not much effects to get better performance.
+ 
+ ### References
+ * https://navoshta.com/end-to-end-deep-learning/
+ * https://chatbotslife.com/using-augmentation-to-mimic-human-driving-496b569760a
+ * 
+ 
