@@ -42,7 +42,7 @@ The final transformed images (Crop, Resize, brightness and flip) samples are bel
 ---
 
 ## Model
-I used Nvidia's End to End self driving CNN models in this projects. It has 3 CNN layers and 3 Fully connected hidden layes. Activation function used 'elu'. Dropout are used in FC layes to prevent overfit. The optimizer is adam and the cost function is mean-squared-error.
+I used [Nvidia's End to End self driving CNN models](https://arxiv.org/abs/1604.07316) in this projects. It has 3 CNN layers and 3 Fully connected hidden layes. Activation function used 'elu'. Dropout are used in FC layes to prevent overfit. The optimizer is adam and the cost function is mean-squared-error.
 
 ### Architecture
 The model architectures are below:
@@ -68,5 +68,3 @@ Train on 167,720 samples, validate on 8,387. Batch size is 128, epochs are 10. E
  ### References
  * https://navoshta.com/end-to-end-deep-learning/
  * https://chatbotslife.com/using-augmentation-to-mimic-human-driving-496b569760a
- * 
- 
