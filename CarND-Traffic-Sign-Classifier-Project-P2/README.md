@@ -10,7 +10,7 @@ This is the project of udacity Term1 German traffic sign classifier project. The
 * Analyze the softmax probabilities of the new images
 * Summarize the results with a written report
 
-Here is a link to my [project code](https://github.com/jaeoh2/self-driving-car-nd/blob/master/CarND-Traffic-Sign-Classifier-Project/Traffic_Sign_Classifier.ipynb)
+Here is a link to my [project code](https://github.com/jaeoh2/self-driving-car-nd/blob/master/CarND-Traffic-Sign-Classifier-Project-P2/Traffic_Sign_Classifier.ipynb)
 
 [//]: # (Image References)
 
