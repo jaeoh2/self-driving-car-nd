@@ -54,7 +54,7 @@ for idx, fname in enumerate(images):
 ```
 
 
-![png](output_6_0.png)
+![png](examples/output_6_0.png)
 
 
 
@@ -81,7 +81,7 @@ plt.subplot(1,2,2), plt.imshow(testDst), plt.title('undistorted')
 
 
 
-![png](output_7_1.png)
+![png](examples/output_7_1.png)
 
 
 
@@ -111,7 +111,7 @@ plt.subplot(1,2,2), plt.imshow(dstImage), plt.title('undistorted')
 
 
 
-![png](output_8_1.png)
+![png](examples/output_8_1.png)
 
 
 # Color space and Threshold
@@ -246,7 +246,7 @@ plt.imshow(gradx,cmap='gray'), plt.title('Gradient X'), plt.axis('off')
 
 
 
-![png](output_12_1.png)
+![png](examples/output_12_1.png)
 
 
 
@@ -265,7 +265,7 @@ plt.imshow(grady,cmap='gray'), plt.title('Gradient Y'), plt.axis('off')
 
 
 
-![png](output_13_1.png)
+![png](examples/output_13_1.png)
 
 
 
@@ -284,7 +284,7 @@ plt.imshow(sobelx_binary,cmap='gray'), plt.title('sobelx_binary'), plt.axis('off
 
 
 
-![png](output_14_1.png)
+![png](examples/output_14_1.png)
 
 
 
@@ -303,7 +303,7 @@ plt.imshow(mag_binary,cmap='gray'), plt.title('Gradient magnitude'), plt.axis('o
 
 
 
-![png](output_15_1.png)
+![png](examples/output_15_1.png)
 
 
 
@@ -322,7 +322,7 @@ plt.imshow(dir_binary,cmap='gray'), plt.title('Gradient direction'), plt.axis('o
 
 
 
-![png](output_16_1.png)
+![png](examples/output_16_1.png)
 
 
 
@@ -343,7 +343,7 @@ plt.imshow(yellow_binary, cmap='gray'), plt.title('Yellow threshold'), plt.axis(
 
 
 
-![png](output_17_1.png)
+![png](examples/output_17_1.png)
 
 
 
@@ -365,7 +365,7 @@ plt.imshow(white_binary, cmap='gray'), plt.title('White threshold'), plt.axis('o
 
 
 
-![png](output_18_1.png)
+![png](examples/output_18_1.png)
 
 
 
@@ -391,7 +391,7 @@ plt.subplot(3,1,3),plt.imshow(combined2, cmap='gray'),plt.title("")
 
 
 
-![png](output_19_1.png)
+![png](examples/output_19_1.png)
 
 
 # Perspective Transform
@@ -453,7 +453,7 @@ plt.scatter(x,y, s=1, color='r')
 
 
 
-![png](output_22_1.png)
+![png](examples/output_22_1.png)
 
 
 # Lane detection and Curve Fitting
@@ -482,7 +482,7 @@ plt.subplot(2,1,2),plt.plot(hist),plt.title("histogram of lane"),plt.axis('off')
 
 
 
-![png](output_24_1.png)
+![png](examples/output_24_1.png)
 
 
 
@@ -593,7 +593,7 @@ plt.ylim(720, 0)
 
 
 
-![png](output_27_1.png)
+![png](examples/output_27_1.png)
 
 
 # Calculate Radius of curvature and Position of Vehicle
@@ -697,7 +697,7 @@ plt.figure(dpi=100),plt.imshow(result),plt.title("Unwarped Image")
 
 
 
-![png](output_36_1.png)
+![png](examples/output_36_1.png)
 
 
 
@@ -755,7 +755,7 @@ plt.figure(dpi=200),plt.imshow(img_out)
 
 
 
-![png](output_38_1.png)
+![png](examples/output_38_1.png)
 
 
 
@@ -886,7 +886,7 @@ for i,imgName in enumerate(images):
 ```
 
 
-![png](output_42_0.png)
+![png](examples/output_42_0.png)
 
 
 
