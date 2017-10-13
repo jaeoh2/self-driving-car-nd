@@ -1,3 +1,16 @@
+# Introduction
+The goals / steps of this project are the following:
+
+* Compute the camera calibration matrix and distortion coefficients given a set of chessboard images.
+* Apply a distortion correction to raw images.
+* Use color transforms, gradients, etc., to create a thresholded binary image.
+* Apply a perspective transform to rectify binary image ("birds-eye view").
+* Detect lane pixels and fit to find the lane boundary.
+* Determine the curvature of the lane and vehicle position with respect to center.
+* Warp the detected lane boundaries back onto the original image.
+* Output visual display of the lane boundaries and numerical estimation of lane curvature and vehicle position.
+
+Here is the my [project code](https://github.com/jaeoh2/self-driving-car-nd/CarND-Advanced-Lane-Lines-P4/Advanced-Lane-Lines.ipynb
 
 
 ```python
@@ -33,22 +46,8 @@ print("image size :{}".format(imgSize))
 
 
 
-![png](output_2_1.png)
+![png](output_3_1.png)
 
-
-# Introduction
-The goals / steps of this project are the following:
-
-* Compute the camera calibration matrix and distortion coefficients given a set of chessboard images.
-* Apply a distortion correction to raw images.
-* Use color transforms, gradients, etc., to create a thresholded binary image.
-* Apply a perspective transform to rectify binary image ("birds-eye view").
-* Detect lane pixels and fit to find the lane boundary.
-* Determine the curvature of the lane and vehicle position with respect to center.
-* Warp the detected lane boundaries back onto the original image.
-* Output visual display of the lane boundaries and numerical estimation of lane curvature and vehicle position.
-
-Here is the my [project code](https://github.com/jaeoh2/self-driving-car-nd/blob/master/CarND-Advanced-Lane-Lines-P4/Advanced-Lane-Lines.ipynb)
 
 # Camera Calibration
 OpenCV functions were used to calculate the camera calibration matrix and distortion coefficients.
@@ -112,9 +111,9 @@ plt.subplot(1,2,2), plt.imshow(testDst), plt.title('undistorted')
 
 
 
-    (<matplotlib.axes._subplots.AxesSubplot at 0x7f0df0ad35c0>,
-     <matplotlib.image.AxesImage at 0x7f0df0a67b00>,
-     <matplotlib.text.Text at 0x7f0df0a486d8>)
+    (<matplotlib.axes._subplots.AxesSubplot at 0x7fe9c18d05c0>,
+     <matplotlib.image.AxesImage at 0x7fe9c1863b00>,
+     <matplotlib.text.Text at 0x7fe9c18446d8>)
 
 
 
@@ -142,9 +141,9 @@ plt.subplot(1,2,2), plt.imshow(dstImage), plt.title('undistorted')
 
 
 
-    (<matplotlib.axes._subplots.AxesSubplot at 0x7f0df0b38588>,
-     <matplotlib.image.AxesImage at 0x7f0dec0d33c8>,
-     <matplotlib.text.Text at 0x7f0dec0b2198>)
+    (<matplotlib.axes._subplots.AxesSubplot at 0x7fe9c18396a0>,
+     <matplotlib.image.AxesImage at 0x7fe9bc47d3c8>,
+     <matplotlib.text.Text at 0x7fe9bc45c198>)
 
 
 
@@ -161,6 +160,43 @@ Here are the some results below:
 
 ```python
 # Color space transform
+def select_yellow(img, lower, upper):
+    hsv = cv2.cvtColor(img, cv2.COLOR_RGB2HSV)
+    #lower = np.array([20,60,60])
+    #upper = np.array([38,174,250])
+    mask = cv2.inRange(hsv, lower, upper)
+    
+    return mask
+
+def select_white(img, lower, upper):
+    #lower = np.array([202,202,202])
+    #upper = np.array([255,255,255])
+    mask = cv2.inRange(img, lower, upper)
+    
+    return mask
+
+def sobel_x_thresh(image, sobel_kernel=3, thresh=(20,100)):
+    hls = cv2.cvtColor(image, cv2.COLOR_RGB2HLS)
+    
+    sobelx1 = cv2.Sobel(hls[:,:,1], cv2.CV_64F, 1,0, ksize=sobel_kernel)
+    sobelx2 = cv2.Sobel(hls[:,:,2], cv2.CV_64F, 1,0, ksize=sobel_kernel)
+    
+    #Scale to 8-bit (0 - 255) and convert to type = np.uint8
+    scaled_sobelx1 = np.uint8(255*sobelx1/ np.max(sobelx1))
+    scaled_sobelx2 = np.uint8(255*sobelx2/ np.max(sobelx2))
+
+    #Create a binary mask where mag thresholds are met
+    binary_outputx1 = np.zeros_like(scaled_sobelx1)
+    binary_outputx1[(scaled_sobelx1 >= thresh[0]) & (scaled_sobelx1 <= thresh[1])] = 1
+
+    binary_outputx2 = np.zeros_like(scaled_sobelx2)
+    binary_outputx2[(scaled_sobelx2 >= thresh[0]) & (scaled_sobelx2 <= thresh[1])] = 1
+
+    binary_output = np.zeros_like(scaled_sobelx1)
+    binary_output[(binary_outputx1 ==1) | (binary_outputx2 ==1)]=1
+    # 6) Return this mask as your binary_output image
+    return binary_output
+
 def abs_sobel_thresh(image, orient='x', sobel_kernel=3, thresh=(0, 255)):
     # Calculate directional gradient
     gray = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
@@ -233,15 +269,15 @@ dirThresh = (np.pi/4, np.pi/3)
 
 
 ```python
-gradx = abs_sobel_thresh(dstImage, orient='x', sobel_kernel=ksize, thresh=(20,200))
+gradx = abs_sobel_thresh(dstImage, orient='x', sobel_kernel=9, thresh=(80,220))
 plt.imshow(gradx,cmap='gray'), plt.title('Gradient X'), plt.axis('off')
 ```
 
 
 
 
-    (<matplotlib.image.AxesImage at 0x7f0dec042ac8>,
-     <matplotlib.text.Text at 0x7f0dec023898>,
+    (<matplotlib.image.AxesImage at 0x7fe9bc3d5c88>,
+     <matplotlib.text.Text at 0x7fe9bc3cea58>,
      (-0.5, 1279.5, 719.5, -0.5))
 
 
@@ -252,21 +288,40 @@ plt.imshow(gradx,cmap='gray'), plt.title('Gradient X'), plt.axis('off')
 
 
 ```python
-grady = abs_sobel_thresh(dstImage, orient='y', sobel_kernel=ksize, thresh=(20,200))
+grady = abs_sobel_thresh(dstImage, orient='y', sobel_kernel=ksize, thresh=(80,220))
 plt.imshow(grady,cmap='gray'), plt.title('Gradient Y'), plt.axis('off')
 ```
 
 
 
 
-    (<matplotlib.image.AxesImage at 0x7f0de46c2cf8>,
-     <matplotlib.text.Text at 0x7f0de4722f60>,
+    (<matplotlib.image.AxesImage at 0x7fe9c1a9dc88>,
+     <matplotlib.text.Text at 0x7fe9c19ae6a0>,
      (-0.5, 1279.5, 719.5, -0.5))
 
 
 
 
 ![png](output_13_1.png)
+
+
+
+```python
+sobelx_binary = sobel_x_thresh(dstImage, sobel_kernel=9, thresh=(80,220))
+plt.imshow(sobelx_binary,cmap='gray'), plt.title('sobelx_binary'), plt.axis('off')
+```
+
+
+
+
+    (<matplotlib.image.AxesImage at 0x7fe9c1d18c88>,
+     <matplotlib.text.Text at 0x7fe9c1a4bf60>,
+     (-0.5, 1279.5, 719.5, -0.5))
+
+
+
+
+![png](output_14_1.png)
 
 
 
@@ -278,14 +333,14 @@ plt.imshow(mag_binary,cmap='gray'), plt.title('Gradient magnitude'), plt.axis('o
 
 
 
-    (<matplotlib.image.AxesImage at 0x7f0de46aa668>,
-     <matplotlib.text.Text at 0x7f0de4689358>,
+    (<matplotlib.image.AxesImage at 0x7fe9bc394eb8>,
+     <matplotlib.text.Text at 0x7fe9c197bba8>,
      (-0.5, 1279.5, 719.5, -0.5))
 
 
 
 
-![png](output_14_1.png)
+![png](output_15_1.png)
 
 
 
@@ -297,38 +352,83 @@ plt.imshow(dir_binary,cmap='gray'), plt.title('Gradient direction'), plt.axis('o
 
 
 
-    (<matplotlib.image.AxesImage at 0x7f0df0b48e48>,
-     <matplotlib.text.Text at 0x7f0df0b57b00>,
+    (<matplotlib.image.AxesImage at 0x7fe9bc37d978>,
+     <matplotlib.text.Text at 0x7fe9bc35b668>,
      (-0.5, 1279.5, 719.5, -0.5))
 
 
 
 
-![png](output_15_1.png)
+![png](output_16_1.png)
 
 
 
 ```python
-combined = np.zeros_like(dir_binary)
-combined[((gradx == 1) & (grady == 1)) | ((mag_binary == 1) & (dir_binary == 1))] = 1
-
-
-plt.figure(dpi=200)
-plt.subplot(2,1,1),plt.imshow(dstImage),plt.axis('off')
-plt.subplot(2,1,2),plt.imshow(combined, cmap='gray'),plt.title("")
+yellow_low = np.array([0,100,100])
+yellow_high = np.array([50,255,255])
+yellow_binary = select_yellow(dstImage, yellow_low, yellow_high)
+plt.imshow(yellow_binary, cmap='gray'), plt.title('Yellow threshold'), plt.axis('off')
 ```
 
 
 
 
-    (<matplotlib.axes._subplots.AxesSubplot at 0x7f0df0c1eb00>,
-     <matplotlib.image.AxesImage at 0x7f0de463e518>,
-     <matplotlib.text.Text at 0x7f0df0c77c18>)
+    (<matplotlib.image.AxesImage at 0x7fe9bc2e85c0>,
+     <matplotlib.text.Text at 0x7fe9bc2c72b0>,
+     (-0.5, 1279.5, 719.5, -0.5))
 
 
 
 
-![png](output_16_1.png)
+![png](output_17_1.png)
+
+
+
+```python
+white_low = np.array([190,190,190]) # 202,202,202
+white_high = np.array([255,255,255]) # 255,255,255
+
+white_binary = select_white(dstImage, white_low, white_high)
+plt.imshow(white_binary, cmap='gray'), plt.title('White threshold'), plt.axis('off')
+```
+
+
+
+
+    (<matplotlib.image.AxesImage at 0x7fe9bc24f198>,
+     <matplotlib.text.Text at 0x7fe9bc2a7e48>,
+     (-0.5, 1279.5, 719.5, -0.5))
+
+
+
+
+![png](output_18_1.png)
+
+
+
+```python
+combined = np.zeros_like(dir_binary)
+combined2 = np.zeros_like(dir_binary)
+#combined[((gradx == 1) & (grady == 1)) | ((mag_binary == 1) & (dir_binary == 1))] = 1
+combined[((sobelx_binary == 1) | (yellow_binary == 1) | (white_binary == 1))] = 1
+combined2[(sobelx_binary == 1) | (yellow_binary == 1)] = 1
+plt.figure(dpi=200)
+plt.subplot(3,1,1),plt.imshow(dstImage),plt.axis('off')
+plt.subplot(3,1,2),plt.imshow(combined, cmap='gray'),plt.title("")
+plt.subplot(3,1,3),plt.imshow(combined2, cmap='gray'),plt.title("")
+```
+
+
+
+
+    (<matplotlib.axes._subplots.AxesSubplot at 0x7fe9bc23a390>,
+     <matplotlib.image.AxesImage at 0x7fe9bc14a470>,
+     <matplotlib.text.Text at 0x7fe9bc1a9160>)
+
+
+
+
+![png](output_19_1.png)
 
 
 # Perspective Transform
@@ -385,12 +485,12 @@ plt.scatter(x,y, s=1, color='r')
 
 
 
-    <matplotlib.collections.PathCollection at 0x7f0de4546198>
+    <matplotlib.collections.PathCollection at 0x7fe9bc05fb38>
 
 
 
 
-![png](output_19_1.png)
+![png](output_22_1.png)
 
 
 # Lane detection and Curve Fitting
@@ -411,15 +511,15 @@ plt.subplot(2,1,2),plt.plot(hist),plt.title("histogram of lane"),plt.axis('off')
 
 
 
-    (<matplotlib.axes._subplots.AxesSubplot at 0x7f0df0b4b978>,
-     [<matplotlib.lines.Line2D at 0x7f0de446e668>],
-     <matplotlib.text.Text at 0x7f0de44c9940>,
-     (-63.950000000000003, 1342.95, -17.626611328125001, 370.15883789062502))
+    (<matplotlib.axes._subplots.AxesSubplot at 0x7fe9bc294860>,
+     [<matplotlib.lines.Line2D at 0x7fe9b41733c8>],
+     <matplotlib.text.Text at 0x7fe9b4153080>,
+     (-63.950000000000003, 1342.95, -15.259960937500001, 320.45917968750001))
 
 
 
 
-![png](output_21_1.png)
+![png](output_24_1.png)
 
 
 
@@ -502,8 +602,8 @@ def sliding_window_lane_finding(img, nwindows=9, margin = 100, minpix = 50, init
 out_img, left_fit, right_fit = sliding_window_lane_finding(
     warpedImage,
     nwindows=9,
-    margin = 70,
-    minpix = 35,
+    margin = 100,
+    minpix = 50,
     init_frame=False)
 ```
 
@@ -530,7 +630,7 @@ plt.ylim(720, 0)
 
 
 
-![png](output_24_1.png)
+![png](output_27_1.png)
 
 
 # Calculate Radius of curvature and Position of Vehicle
@@ -559,7 +659,7 @@ left_curverad, right_curverad
 
 
 
-    (10674.634388055798, 14337.264995154886)
+    (2720.9516127337042, 3717.5370810760423)
 
 
 
@@ -581,7 +681,7 @@ right_curverad = ((1 + (2*right_fit_cr[0]*y_eval*ym_per_pix + right_fit_cr[1])**
 
 center_point_from_leftfit = left_fit[0]*720**2 + left_fit[1]*720 + left_fit[2]
 center_point_from_rightfit = right_fit[0]*720**2 + right_fit[1]*720 + right_fit[2]
-center_offset = ((center_point_from_leftfit + center_point_from_rightfit)/2. - 1280/2.)*xm_per_pix
+center_offset = (1280/2. - (center_point_from_leftfit + center_point_from_rightfit)/2.)*xm_per_pix
 ```
 
 * First we assume that camera is mounted on center of the vehicle.
@@ -593,9 +693,9 @@ center_offset = ((center_point_from_leftfit + center_point_from_rightfit)/2. - 1
 print("Left CurvRadius: {:.3f}m\nRight CurvRadius: {:.3f}m\nCenter offset: {:.3f}m".format(left_curverad, right_curverad, center_offset))
 ```
 
-    Left CurvRadius: 1930.380m
-    Right CurvRadius: 42880.519m
-    Center offset: 0.115m
+    Left CurvRadius: 891.417m
+    Right CurvRadius: 1220.376m
+    Center offset: -0.203m
 
 
 # Warp Back image and overlay
@@ -627,14 +727,14 @@ plt.figure(dpi=100),plt.imshow(result),plt.title("Unwarped Image")
 
 
 
-    (<matplotlib.figure.Figure at 0x7f0df0a7a470>,
-     <matplotlib.image.AxesImage at 0x7f0de43700f0>,
-     <matplotlib.text.Text at 0x7f0de43c97b8>)
+    (<matplotlib.figure.Figure at 0x7fe9bc26fcc0>,
+     <matplotlib.image.AxesImage at 0x7fe9b4077278>,
+     <matplotlib.text.Text at 0x7fe9b4051940>)
 
 
 
 
-![png](output_33_1.png)
+![png](output_36_1.png)
 
 
 
@@ -686,65 +786,39 @@ plt.figure(dpi=200),plt.imshow(img_out)
 
 
 
-    (<matplotlib.figure.Figure at 0x7f0dec098ba8>,
-     <matplotlib.image.AxesImage at 0x7f0de435e0f0>)
+    (<matplotlib.figure.Figure at 0x7fe9a8fd6cf8>,
+     <matplotlib.image.AxesImage at 0x7fea56029470>)
 
 
 
 
-![png](output_35_1.png)
+![png](output_38_1.png)
 
 
 
 ```python
-def sanity_check(left_fit, right_fit, minSlope, maxSlope):
-    #Performs a sanity check on the lanes
-    #Check 1: check if left and right fits exists
-    #Check 2: Calculates the tangent between left and right in two points, and check if it is in a reasonable threshold
-    xm_per_pix = 3.7/700 # meters per pixel in x dimension
-    if len(left_fit) ==0 or len(right_fit) == 0:
-        status = False
-        d0=0
-        d1=0
-        #Previous fitlines routine returns empty list to them if not finds
-    else:
-        #Difference of slope
-        L_0 = 2*left_fit[0]*460+left_fit[1]
-        R_0 = 2*right_fit[0]*460+right_fit[1]
-        d0 =  np.abs(L_0-R_0)
-
-        L_1 = 2*left_fit[0]*720+left_fit[1]
-        R_1 = 2*right_fit[0]*720+right_fit[1]
-        d1 =  np.abs(L_1-R_1)
-
-        
-        if d0>= minSlope and d0<= maxSlope and d1>= minSlope and d1<= maxSlope:
-            status = True
-        else:
-            status = False
-            
-    return(status, d0, d1)
-```
-
-
-```python
-left_fit = left_fit
-right_fit = right_fit
-
 def processImage(input_image):
-    global left_fit
-    global right_fit
-
     #Undistortion images
     undistImage = cv2.undistort(input_image, mtx, dist, None, mtx)
     #Threshold binary images
-    gradx = abs_sobel_thresh(undistImage, orient='x', sobel_kernel=15, thresh=(20,200))
-    grady = abs_sobel_thresh(undistImage, orient='y', sobel_kernel=15, thresh=(20,200))
-    mag_binary = mag_thresh(undistImage, sobel_kernel=15, mag_thresh=(20,200))
-    dir_binary = dir_threshold(undistImage, sobel_kernel=15, thresh=(0.7,1.3))
+    #gradx = abs_sobel_thresh(undistImage, orient='x', sobel_kernel=15, thresh=(20,200))
+    #grady = abs_sobel_thresh(undistImage, orient='y', sobel_kernel=15, thresh=(20,200))
+    #mag_binary = mag_thresh(undistImage, sobel_kernel=15, mag_thresh=(20,200))
+    #dir_binary = dir_threshold(undistImage, sobel_kernel=15, thresh=(0.7,1.3))
+    yellow_low = np.array([0,100,100])
+    yellow_high = np.array([50,255,255])
+    white_low = np.array([202,202,202])
+    white_high = np.array([255,255,255])
+    yellow_binary = select_yellow(undistImage, yellow_low, yellow_high)
+    white_binary = select_white(undistImage, white_low, white_high)
+    sobelx_binary = sobel_x_thresh(undistImage, sobel_kernel=15, thresh=(80,220))
     
     combined = np.zeros_like(dir_binary)
-    combined[((gradx == 1) & (grady == 1)) | ((mag_binary == 1) & (dir_binary == 1))] = 1
+    #combined[((gradx == 1) & (grady == 1)) | ((mag_binary == 1) & (dir_binary == 1))] = 1
+    #combined[((mag_binary == 1) & (dir_binary == 1)) | (yellow_binary == 1) | (white_binary == 1)] = 1
+    #combined[(yellow_binary == 1) | (white_binary == 1)] = 1
+    #combined[((mag_binary == 1) | (yellow_binary == 1) | (white_binary == 1))] = 1
+    combined[((sobelx_binary == 1) | (yellow_binary == 1) | (white_binary == 1))] = 1
 
     #Bird-view images and Curve radius
     warpedImage = cv2.warpPerspective(combined, M, imgSize)
@@ -753,8 +827,8 @@ def processImage(input_image):
     out_img, left_fit, right_fit = sliding_window_lane_finding(
         warpedImage,
         nwindows = 9,
-        margin = 70,
-        minpix = 35,
+        margin = 100,
+        minpix = 50,
         init_frame=False)
     
     #Curve fitting
@@ -777,7 +851,7 @@ def processImage(input_image):
 
     center_point_from_leftfit = left_fit[0]*720**2 + left_fit[1]*720 + left_fit[2]
     center_point_from_rightfit = right_fit[0]*720**2 + right_fit[1]*720 + right_fit[2]
-    center_offset = ((center_point_from_leftfit + center_point_from_rightfit)/2. - 1280/2.)*xm_per_pix
+    center_offset = ((1280/2.- center_point_from_leftfit + center_point_from_rightfit)/2.)*xm_per_pix
     
     #Warp back image
     # Create an image to draw the lines on
@@ -849,7 +923,7 @@ for i,imgName in enumerate(images):
 ```
 
 
-![png](output_40_0.png)
+![png](output_42_0.png)
 
 
 
@@ -869,21 +943,22 @@ out_clip = clip1.fl_image(processImage)
     [MoviePy] Writing video out_project_video.mp4
 
 
-    100%|█████████▉| 1260/1261 [05:33<00:00,  3.64it/s]
+    100%||||||||||||||||||| 1260/1261 [03:05<00:00,  6.71it/s]
 
 
     [MoviePy] Done.
     [MoviePy] >>>> Video ready: out_project_video.mp4 
     
-    CPU times: user 6min 55s, sys: 5.32 s, total: 7min
-    Wall time: 5min 34s
+    CPU times: user 3min 41s, sys: 4.57 s, total: 3min 46s
+    Wall time: 3min 5s
 
 
-# Conclusion
+## Conclusion
 
 Using advanced computer vision algorithm (Undistortion, Color space transform, Gradient threshold, Sliding windows and Perspective projection), we can easily get the lane detection program. But it's not enough to adapt in real situations. In different roads, weathers and brightness, there are chance to fail detecting lane lines. To come up with this shortcoming, we may use deep learning based feature extraction technique(CNN) in various situation.
 * Issues
   * Dashed lane in the far distance from vehicle was not detected well. Because of this, most curve radius of dashed lane has wrong directional curvature. To come up with this I think need to improve the binary threshold function.
+  * Updates: I updates threshold binary function based on udacity reviewers suggestions(Yello and White color threshold). The lane detection performance was improved in final result video.
 
 * Improvements
   * Test different color space (YUV, RGB)
