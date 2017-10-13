@@ -48,7 +48,7 @@ The goals / steps of this project are the following:
 * Warp the detected lane boundaries back onto the original image.
 * Output visual display of the lane boundaries and numerical estimation of lane curvature and vehicle position.
 
-Here is the my [project code](https://github.com/jaeoh2/self-driving-car-nd/CarND-Advanced-Lane-Lines-P4/Advanced-Lane-Lines.ipynb
+Here is the my [project code](https://github.com/jaeoh2/self-driving-car-nd/blob/master/CarND-Advanced-Lane-Lines-P4/Advanced-Lane-Lines.ipynb)
 
 # Camera Calibration
 OpenCV functions were used to calculate the camera calibration matrix and distortion coefficients.
