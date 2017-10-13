@@ -1,3 +1,4 @@
+
 # Introduction
 The goals / steps of this project are the following:
 
@@ -10,7 +11,44 @@ The goals / steps of this project are the following:
 * Warp the detected lane boundaries back onto the original image.
 * Output visual display of the lane boundaries and numerical estimation of lane curvature and vehicle position.
 
-Here is the my [project code](https://github.com/jaeoh2/self-driving-car-nd/blob/master/CarND-Advanced-Lane-Lines-P4/Advanced-Lane-Lines.ipynb)
+Here is the my [project code](https://github.com/jaeoh2/self-driving-car-nd/CarND-Advanced-Lane-Lines-P4/Advanced-Lane-Lines.ipynb
+
+
+```python
+import numpy as np
+import cv2
+import os,sys
+import glob
+import matplotlib.pyplot as plt
+import matplotlib.image as mpimg
+
+%matplotlib inline
+```
+
+
+```python
+camera_cal = './camera_cal/'
+output_imgs = './output_images/'
+test_imgs = './test_images/'
+```
+
+
+```python
+testimg = cv2.imread(camera_cal + 'calibration5.jpg')
+nx = 9
+ny = 6
+imgSize = (testimg.shape[1], testimg.shape[0])
+plt.imshow(testimg)
+print("image size :{}".format(imgSize))
+
+```
+
+    image size :(1280, 720)
+
+
+
+![png](output_3_1.png)
+
 
 # Camera Calibration
 OpenCV functions were used to calculate the camera calibration matrix and distortion coefficients.
@@ -54,7 +92,7 @@ for idx, fname in enumerate(images):
 ```
 
 
-![png](examples/output_6_0.png)
+![png](output_6_0.png)
 
 
 
@@ -81,7 +119,7 @@ plt.subplot(1,2,2), plt.imshow(testDst), plt.title('undistorted')
 
 
 
-![png](examples/output_7_1.png)
+![png](output_7_1.png)
 
 
 
@@ -111,7 +149,7 @@ plt.subplot(1,2,2), plt.imshow(dstImage), plt.title('undistorted')
 
 
 
-![png](examples/output_8_1.png)
+![png](output_8_1.png)
 
 
 # Color space and Threshold
@@ -246,7 +284,7 @@ plt.imshow(gradx,cmap='gray'), plt.title('Gradient X'), plt.axis('off')
 
 
 
-![png](examples/output_12_1.png)
+![png](output_12_1.png)
 
 
 
@@ -265,7 +303,7 @@ plt.imshow(grady,cmap='gray'), plt.title('Gradient Y'), plt.axis('off')
 
 
 
-![png](examples/output_13_1.png)
+![png](output_13_1.png)
 
 
 
@@ -284,7 +322,7 @@ plt.imshow(sobelx_binary,cmap='gray'), plt.title('sobelx_binary'), plt.axis('off
 
 
 
-![png](examples/output_14_1.png)
+![png](output_14_1.png)
 
 
 
@@ -303,7 +341,7 @@ plt.imshow(mag_binary,cmap='gray'), plt.title('Gradient magnitude'), plt.axis('o
 
 
 
-![png](examples/output_15_1.png)
+![png](output_15_1.png)
 
 
 
@@ -322,7 +360,7 @@ plt.imshow(dir_binary,cmap='gray'), plt.title('Gradient direction'), plt.axis('o
 
 
 
-![png](examples/output_16_1.png)
+![png](output_16_1.png)
 
 
 
@@ -343,7 +381,7 @@ plt.imshow(yellow_binary, cmap='gray'), plt.title('Yellow threshold'), plt.axis(
 
 
 
-![png](examples/output_17_1.png)
+![png](output_17_1.png)
 
 
 
@@ -365,7 +403,7 @@ plt.imshow(white_binary, cmap='gray'), plt.title('White threshold'), plt.axis('o
 
 
 
-![png](examples/output_18_1.png)
+![png](output_18_1.png)
 
 
 
@@ -391,7 +429,7 @@ plt.subplot(3,1,3),plt.imshow(combined2, cmap='gray'),plt.title("")
 
 
 
-![png](examples/output_19_1.png)
+![png](output_19_1.png)
 
 
 # Perspective Transform
@@ -453,7 +491,7 @@ plt.scatter(x,y, s=1, color='r')
 
 
 
-![png](examples/output_22_1.png)
+![png](output_22_1.png)
 
 
 # Lane detection and Curve Fitting
@@ -482,7 +520,7 @@ plt.subplot(2,1,2),plt.plot(hist),plt.title("histogram of lane"),plt.axis('off')
 
 
 
-![png](examples/output_24_1.png)
+![png](output_24_1.png)
 
 
 
@@ -593,7 +631,7 @@ plt.ylim(720, 0)
 
 
 
-![png](examples/output_27_1.png)
+![png](output_27_1.png)
 
 
 # Calculate Radius of curvature and Position of Vehicle
@@ -697,7 +735,7 @@ plt.figure(dpi=100),plt.imshow(result),plt.title("Unwarped Image")
 
 
 
-![png](examples/output_36_1.png)
+![png](output_36_1.png)
 
 
 
@@ -755,7 +793,7 @@ plt.figure(dpi=200),plt.imshow(img_out)
 
 
 
-![png](examples/output_38_1.png)
+![png](output_38_1.png)
 
 
 
@@ -886,7 +924,7 @@ for i,imgName in enumerate(images):
 ```
 
 
-![png](examples/output_42_0.png)
+![png](output_42_0.png)
 
 
 
@@ -906,7 +944,7 @@ out_clip = clip1.fl_image(processImage)
     [MoviePy] Writing video out_project_video.mp4
 
 
-    100%||||||||||||||||||| 1260/1261 [03:05<00:00,  6.71it/s]
+    100%|█████████▉| 1260/1261 [03:05<00:00,  6.71it/s]
 
 
     [MoviePy] Done.
