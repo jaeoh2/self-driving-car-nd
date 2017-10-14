@@ -919,6 +919,8 @@ out_clip = clip1.fl_image(processImage)
 
 ## Conclusion
 
+[![alt_text](http://img.youtube.com/vi/-pAdqY5KoPQ/0.jpg)](https://youtu.be/-pAdqY5KoPQ)
+
 Using advanced computer vision algorithm (Undistortion, Color space transform, Gradient threshold, Sliding windows and Perspective projection), we can easily get the lane detection program. But it's not enough to adapt in real situations. In different roads, weathers and brightness, there are chance to fail detecting lane lines. To come up with this shortcoming, we may use deep learning based feature extraction technique(CNN) in various situation.
 * Issues
   * Dashed lane in the far distance from vehicle was not detected well. Because of this, most curve radius of dashed lane has wrong directional curvature. To come up with this I think need to improve the binary threshold function.
