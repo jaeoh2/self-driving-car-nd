@@ -1,16 +1,21 @@
 import numpy as np
 import cv2
 import os, time
+import glob
 import matplotlib.image as mpimg
 from skimage.feature import hog
 from sklearn.svm import LinearSVC
 from sklearn.preprocessing import StandardScaler
 
-def get_dataset(foler_path):
+def get_dataset(folder_path):
+    '''
     data_list = []
-    for root, dir, files in os.walk(foler_path):
+    for root, dir, files in os.walk(folder_path):
         for filename in files:
             data_list.append(os.path.join(root, filename))
+    return data_list
+    '''
+    data_list = glob.glob(folder_path + "**/*.png")
     return data_list
 
 def convert_color(img, conv='RGB2YCrCb'):
