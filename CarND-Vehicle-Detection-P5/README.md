@@ -158,7 +158,7 @@ I combined with mutiple features(HOG, color histogram and binned color) and noam
 
 
 ```python
-# Parameter choised
+# Parameter chosen
 color_space = 'YCrCb'   # Can be RGB, HSV, LUV, *HLS, YUV, YCrCb
 orient = 12            #32 # HOG orientations
 pix_per_cell = 8      #16 # HOG pixels per cell
@@ -733,7 +733,7 @@ On this project we detected vehicles using machine learning approaches. Here is 
 1. Sliding windows and find the vehicle detected region
 1. Make the heat-map and eliminate false positives
 
-We took the unique features from images of vehicle and non-vehicle  using feature extraction method(hog, color histogram and binned color) and combined it. After got features we trained linear support vector classifier. The parameters tuned by several tests results. Instead of using sliding window approach, define a single function that can extract features using hog sub-sampling and make predictions directly. We can reduced the false positives using heat-map and overlay threshold methods. And we will integrate a heat map over several frames of video, to get more robust result, such that areas of multiple detections get "hot", while transient false positives stay "cool". we can then vehicle detection program robust on false positives.
+We took the unique features from images of vehicle and non-vehicle  using feature extraction method(hog, color histogram and binned color) and combined it. After got features we trained linear support vector classifier. The parameters tuned by several tests results. Instead of using sliding window approach, define a single function that can extract features using hog sub-sampling and make predictions directly. We can reduced the false positives using heat-map and overlay threshold methods. And we will integrate a heat map over several frames of video, to get more robust result, such that areas of multiple detections get "hot", while transient false positives stay "cool". we can get vehicle detection program robust on false positives.
 
 ### issues
 1. Still we have false-positives.
