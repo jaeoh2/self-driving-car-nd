@@ -8,7 +8,7 @@ from sklearn.svm import LinearSVC
 from sklearn.preprocessing import StandardScaler
 
 def get_dataset(folder_path):
-    '''
+    ''' 
     data_list = []
     for root, dir, files in os.walk(folder_path):
         for filename in files:
